@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
+import CardMoviesComponents from "../../Components/CardMovies";
 
 const HomeContainer = () => {
   const [content, setContent] = useState([]);
@@ -14,6 +15,7 @@ const HomeContainer = () => {
       `https://api.themoviedb.org/3/trending/all/day?api_key=f4c288dd673ca91e667149ed4b62d865&page=${pageno}`
     );
     setContent(data.results);
+    setPaginationno(data.total_pages);
     console.log("data", data);
   };
   useEffect(() => {
@@ -24,8 +26,16 @@ const HomeContainer = () => {
       <Container>
         <Row>
           <Col className="col-12">
-            <h1>Home page container</h1>
+            <h1 className="txtCenter">Top Trending</h1>
+            <h3 className="txtCenter">TV and Movie for you</h3>
           </Col>
+          {
+            content && content.length > 0 ? content.map((item) => {
+              return (
+                <CardMoviesComponents key={item.id} data={item} mediaType='tv' />
+              )
+            }) : 'Loading Content ...'
+          }
         </Row>
       </Container>
     </main>
