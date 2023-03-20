@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "./details.css";
-import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import DarkVariantExample from "../../Components/Carousel";
 import { img_300, img_not_available } from "../../Config";
 
 const DetailsContainer = () => {
   const params = useParams();
-  // console.log("params", params);
   const [content, setContent] = useState();
   const [video, setVideo] = useState();
   const [credits, setCredits] = useState();
@@ -19,10 +20,12 @@ const DetailsContainer = () => {
       ? content.title
       : "";
 
+  // console.log('params', params);
   const id = params.movieid || "";
-  const _media_type = params.mediatype || "";
-
-  // const API_KEY = `(${process.env.REACT_APP_NOT_SECRET_CODE})`;
+  const _media_type =
+    params && params.mediatype && params.mediatype !== ""
+      ? params.mediatype.toLowerCase()
+      : "";
   const API_KEY = process.env.REACT_APP_NOT_SECRET_CODE;
 
   const fetchData = async () => {
@@ -31,6 +34,7 @@ const DetailsContainer = () => {
         `https://api.themoviedb.org/3/${_media_type}/${id}?api_key=f4c288dd673ca91e667149ed4b62d865&language=en-US`
       );
       setContent(data);
+      //console.log('fetchData details',  data);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +58,7 @@ const DetailsContainer = () => {
         `https://api.themoviedb.org/3/${_media_type}/${id}/credits?api_key=f4c288dd673ca91e667149ed4b62d865&language=en-US`
       );
       setCredits(data.cast);
-      // console.log("sdata", data);
+      console.log("sdata", data);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +68,7 @@ const DetailsContainer = () => {
     fetchData();
     fetchVideo();
     creditsFetch();
+    //eslint-disable-next-line
   }, []);
 
   const renderDataHtml = () => {
@@ -145,6 +150,14 @@ const DetailsContainer = () => {
         </Col>
         <Col className="col-12 col-xl-6">
           <div className="frameSec">
+            {/* <a rel="noreferrer" target="_blank" href={`https://www.youtube.com/watch?v=${video}`}>
+                            <figure className="youtubeImage">
+                                <span className='imageSec'>
+                                    <img src={videoBgPoster} alt="" title="" />
+                                </span>
+                                <span className='iconYoutube'></span>
+                            </figure>
+                        </a> */}
             <iframe
               width="560"
               height="315"
@@ -159,7 +172,6 @@ const DetailsContainer = () => {
       </Row>
     );
   };
-
   return (
     <>
       <main className="detailsPage">
