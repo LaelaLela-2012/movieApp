@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import CardMoviesComponents from "../../Components/CardMovies";
+import PaginationComponent from "../../Components/Pagination";
 
 const HomeContainer = () => {
   const [content, setContent] = useState([]);
@@ -16,11 +17,21 @@ const HomeContainer = () => {
     );
     setContent(data.results);
     setPaginationno(data.total_pages);
-    console.log("data", data);
   };
+
+  // useEffect(() => {
+  //   GetDataTrending();
+  // }, []);
+
   useEffect(() => {
+    // console.log("Trending Component did mount");
     GetDataTrending();
-  }, []);
+  }, [pageno]);
+
+  const handleClick = (number) => {
+    setPageno(number);
+  };
+
   return (
     <main className="homePage">
       <Container>
@@ -29,13 +40,26 @@ const HomeContainer = () => {
             <h1 className="txtCenter">Top Trending</h1>
             <h3 className="txtCenter">TV and Movie for you</h3>
           </Col>
-          {
-            content && content.length > 0 ? content.map((item) => {
-              return (
-                <CardMoviesComponents key={item.id} data={item} mediaType='tv' />
-              )
-            }) : 'Loading Content ...'
-          }
+          {content && content.length > 0
+            ? content.map((item) => {
+                return (
+                  <CardMoviesComponents
+                    key={item.id}
+                    data={item}
+                    mediaType="tv"
+                  />
+                );
+              })
+            : "Loading Content ..."}
+          {paginationno && paginationno > 1 ? (
+            <PaginationComponent
+              maxnum={paginationno}
+              activenum={pageno}
+              handleClick={handleClick}
+            />
+          ) : (
+            ""
+          )}
         </Row>
       </Container>
     </main>
