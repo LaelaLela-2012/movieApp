@@ -1,9 +1,12 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import RouterComponent from "./Route";
+
+import RouteComponent from './Route';
 
 function App() {
-  return <RouterComponent />; 
+  return (
+    <div className="App">
+      <RouteComponent />
+    </div>
+  );
 }
 
 export default App;

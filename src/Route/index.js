@@ -1,36 +1,36 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomeContainer from "../Container/Home";
-import AboutContainer from "../Container/About";
-import ContactContainer from "../Container/Contact";
-import MoviesContainer from "../Container/Movies";
-import SearchContainer from "../Container/Search";
-import TvSeriesContainer from "../Container/TVSeries";
-import DetailsContainer from "../Container/Details";
-import HeaderComponents from "../Components/Header";
-import FooterComponents from "../Components/Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const RouterComponent = () => {
+import FooterComponent from "../Components/Footer";
+import HeaderComponent from "../Components/Header";
+import HomeContainer from "../Container/Home";
+// import ContactContainer from '../Container/Contact';
+import DetailsContainer from "../Container/Details";
+import MoviesContainer from "../Container/Movies";
+import TvSeriesContainer from "../Container/TvSeries";
+import SearchContainer from "../Container/Search";
+// import AboutContainer from '../Container/About';
+const RouteComponent = () => {
   return (
     <>
       <BrowserRouter>
-        <HeaderComponents />
+        <HeaderComponent />
         <Routes>
           <Route path="/" element={<HomeContainer />} />
-          <Route path="/about" element={<AboutContainer />} />
-          <Route path="/contact" element={<ContactContainer />} />
+          {/* <Route path='/about' element={<AboutContainer />} /> */}
           <Route path="/movies" element={<MoviesContainer />} />
+          <Route path="/series" element={<TvSeriesContainer />} />
           <Route path="/search" element={<SearchContainer />} />
-          <Route path="/tvseries" element={<TvSeriesContainer />} />
+          {/* <Route path="/contact" element={<ContactContainer />} /> */}
           <Route
             path="/details/:movieid/:mediatype"
             element={<DetailsContainer />}
           />
         </Routes>
-        <FooterComponents />
+        <FooterComponent />
       </BrowserRouter>
     </>
   );
 };
 
-export default RouterComponent;
+export default RouteComponent;
